@@ -12,21 +12,23 @@ void JBH_GameStart::Start()
 
 void JBH_GameStart::MainUpdate()
 {
+	//全員登場までは、次のステートへ行かない
 	if (m_PlayerIterator != m_PlayerEnd)
 	{
 		Player* player = (*m_PlayerIterator);
-		Piece* piece = &player->Piece;
+		Piece* piece = &player->OwnPiece;
 		Square* startSquare = piece->Camp == CAMP_BAD ?
-			GameManager::Instance()->MainBoard->GetBadStartSquare() :
-			GameManager::Instance()->MainBoard->GetGoodStartSquare();
+			GameManager::Instance()->MainBoard.GetBadStartSquare() :
+			GameManager::Instance()->MainBoard.GetGoodStartSquare();
 
-		//test need piece in square event
-		piece->FootOnSquare.emplace_back(startSquare);
+		piece->FootOnSquare = startSquare;
 		startSquare->Piece = piece;
-		D3DXVECTOR3 startSquarePos = startSquare->TargetSquareObject->GetTransform()->GetPosition();
+		D3DXVECTOR3 startSquarePos = 
+			startSquare->TargetSquareObject->GetTransform()->GetPosition();
 
-		ABH_PieceInit* pieceInit = 
-			BehaviourFactory::Instance()->CreateOnceBH<ABH_PieceInit>();
+		//コマ登場の演出を始める
+		OBH_PieceInit* pieceInit = 
+			BehaviourFactory::CreateOnceBH<OBH_PieceInit>();
 		pieceInit->TargetPiece = piece;
 		pieceInit->StartPosition = startSquarePos + D3DXVECTOR3(0, 10, 0);
 		pieceInit->EndPosition = startSquarePos;
@@ -34,10 +36,11 @@ void JBH_GameStart::MainUpdate()
 		GameManager::Instance()->JumpTo(pieceInit);
 
 		m_PlayerIterator++;
-		return;
 	}
-
-	NextState();
+	else
+	{
+		NextState();
+	}
 }
 
 void JBH_GameStart::End()

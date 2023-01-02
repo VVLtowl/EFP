@@ -7,7 +7,7 @@ void Judgement::Init()
 {
 	//set up judgement behaviour
 	{
-		m_MainLoopBehaviours.push_back(BehaviourFactory::Instance()->CreateEternalBH<JBH_GameStart>());
+		m_MainLoopBehaviours.push_back(BehaviourFactory::CreateEternalBH<JBH_GameStart>());
 	}
 }
 

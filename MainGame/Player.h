@@ -1,12 +1,14 @@
 #pragma once
 #include <list>
 #include <string>
-#include "Excuter.h"
 #include "Piece.h"
-
 
 class Player
 {
+public:
+	Player();
+	~Player();
+
 public:
 	enum FixedBHID
 	{
@@ -48,6 +50,6 @@ public:
 	int ActPoint = 0;
 
 	//Piece
-	Piece Piece;
+	Piece OwnPiece;
 };
 

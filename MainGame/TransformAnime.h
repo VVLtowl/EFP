@@ -1,7 +1,35 @@
 #pragma once
 #include "Component.h"
 #include <vector>
+#include <functional>
 
+/*********************************************************
+* @brief    各フレームのデータの計算関数
+********************************************************/
+class ComputeFrameTransformDataFunc
+{
+public:
+    virtual void operator()(class TransformAnime* ani) = 0;
+};
+
+class SlowLerpAnime :
+    public ComputeFrameTransformDataFunc
+{
+public:
+    void operator()(class TransformAnime* ani);
+};
+
+//class  :
+//    public ComputeFrameTransformDataFunc
+//{
+//public:
+//    void operator()(TransformAnime* ani);
+//};
+
+
+/*********************************************************
+* @brief    変換アニメの情報
+********************************************************/
 struct TransformAnimeDescripition
 {
     D3DXVECTOR3 StartPosition = V3_ZERO;
@@ -12,12 +40,25 @@ struct TransformAnimeDescripition
     D3DXVECTOR3 EndScale = V3_ONE;
 
     int LoopCount = 1;//INT_MAX:infinity loop
-    int DurationCount = 60;
+    int Duration = 60;
+
+    SlowLerpAnime computeFunc;
+    ComputeFrameTransformDataFunc& ComputeAniDataFunc = computeFunc;
+    std::function<void()> EndEvent = []() {; };
+
+
 
     TransformAnimeDescripition() {};
     TransformAnimeDescripition(
-        class Transform3D* start=nullptr, 
-        class Transform3D* end=nullptr)
+        D3DXVECTOR3 startPos, 
+        D3DXVECTOR3 endPos) 
+    {
+        StartPosition = startPos;
+        EndPosition = endPos;
+    };
+    TransformAnimeDescripition(
+        class Transform3D* start, 
+        class Transform3D* end)
     {
         if (start != nullptr)
         {
@@ -33,21 +74,23 @@ struct TransformAnimeDescripition
             EndScale = end->GetScale();
         }
     }
-
 };
 
 class TransformAnime :
     public Component
 {
 public:
-    TransformAnime(class GameObject* owner,
+    TransformAnime(
+        class GameObject* owner,
         TransformAnimeDescripition desc,
-        class ComputeFrameTransformDataFunc& computeDataFunc,
         int order = COMP_TRANSFORMANIME);
     ~TransformAnime();
     void Update() override;
 
     void Destroy();
+
+private:
+    std::function<void()> m_EndEvent;
 
 public:
     D3DXVECTOR3 m_StartPosition;
@@ -71,18 +114,3 @@ public:
     std::vector<D3DXVECTOR3> m_AnimeScales;
 };
 
-/*********************************************************
-* @brief    各フレームのデータの計算関数
-********************************************************/
-class ComputeFrameTransformDataFunc
-{
-public:
-    virtual void operator()(TransformAnime* ani) = 0;
-};
-
-class SlowLerpAnime :
-    public ComputeFrameTransformDataFunc
-{
-public:
-    void operator()(TransformAnime* ani);
-};

@@ -1,15 +1,16 @@
 #pragma once
 #include "Behaviour.h"
-#include "Piece.h"
 
-class ABH_PieceInit:
+class OBH_PieceInit:
 	public Behaviour
 {
 public:
-	Piece* TargetPiece;
+	class Piece* TargetPiece;
 	D3DXVECTOR3 StartPosition;
 	D3DXVECTOR3 EndPosition;
 	float CountDown;
+
+	bool IsOver;
 public:
 	void Start()override;
 	void MainUpdate()override;

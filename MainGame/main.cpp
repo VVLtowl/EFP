@@ -243,97 +243,86 @@ void Init()
 	//test create obj
 	if(1)
 	{
-		//test
-
 		//test plane
-		Plane* plane = GameObjectManager::Create<Plane>();
-		plane->GetTransform()->SetRotation(PI / 2.0f, 0, 0);
-		plane->GetTransform()->SetPosition(0, 0, 0);
+			Plane* plane = GameObjectManager::Create<Plane>();
+			plane->GetTransform()->SetRotation(PI / 2.0f, 0, 0);
+			plane->GetTransform()->SetPosition(0, 0, 0);
 
 		//test light
-		MainLight* lit = GameObjectManager::Create<MainLight>();
-		//lit->GetMyLight()->LookAt = t->GetTransform();
+			MainLight* lit = GameObjectManager::Create<MainLight>();
 
 		//test camera
-		MainCamera* cmr = GameObjectManager::Create<MainCamera>();
-		cmr->GetCamera()->LookAt = plane->GetTransform();
-
+			MainCamera* cmr = GameObjectManager::Create<MainCamera>();
+			cmr->GetCamera()->LookAt = plane->GetTransform();
 
 		//test obj
-		Torus* t = GameObjectManager::Create<Torus>();
-		Torus* t2 = GameObjectManager::Create<Torus>();
-		Torus* t3 = GameObjectManager::Create<Torus>();
-		//new MoveControl(t3);
-		//Emitter* emt = GameObjectManager::Create<Emitter>();
+		if (0)
+		{
+			Torus* t = GameObjectManager::Create<Torus>();
+			Torus* t2 = GameObjectManager::Create<Torus>();
+			Torus* t3 = GameObjectManager::Create<Torus>();
 
-		t2->GetTransform()->SetParent(t->GetTransform());
-		t2->GetTransform()->SetPosition(1, 1, 0);
-		t2->GetTransform()->SetScale(0.5f, 0.5f, 0.5f);
+			t2->GetTransform()->SetParent(t->GetTransform());
+			t2->GetTransform()->SetPosition(1, 1, 0);
+			t2->GetTransform()->SetScale(0.5f, 0.5f, 0.5f);
 
-		t3->GetTransform()->SetParent(t2->GetTransform());
-		t3->GetTransform()->SetPosition(0, 1, 0);
-		t3->GetTransform()->SetScale(0.5f, 0.5f, 0.5f);
+			t3->GetTransform()->SetParent(t2->GetTransform());
+			t3->GetTransform()->SetPosition(0, 1, 0);
+			t3->GetTransform()->SetScale(0.5f, 0.5f, 0.5f);
 
+			//test line painter
+			DrawLineDescription dldesc;
+			dldesc.StartTransform = t3->GetTransform();
+			dldesc.EndTransform = t->GetTransform();
+			dldesc.Color = { 5,2,2,1 };
+			dldesc.Size = 0.01f;
+			LinePainter::Instance()->MakeLine(dldesc);
 
-		//test line painter
-		DrawLineDescription dldesc;
-		dldesc.StartTransform = t3->GetTransform();
-		dldesc.EndTransform = t->GetTransform();
-		dldesc.Color = { 5,2,2,1 };
-		dldesc.Size = 0.01f;
-		LinePainter::Instance()->MakeLine(dldesc);
-
-		//test emitter and local forward
-		//Emitter* emt = GameObjectManager::Create<Emitter>();
-		//emt->GetTransform()->SetParent(t3->GetTransform());
-
-		//test pawn normal
-		Pawn_Normal* pawn = GameObjectManager::Create<Pawn_Normal>();
-		pawn->GetTransform()->SetParent(t2->GetTransform());
-
+			//test transform anime
+			if (0)
+			{
+				TransformAnimeDescripition tadesc(t->GetTransform(), t->GetTransform());
+				tadesc.LoopCount = INT_MAX;
+				tadesc.EndPosition = { 0,3,0 };
+				D3DXQuaternionRotationYawPitchRoll(&tadesc.EndRotation, PI / 3, PI / 2, PI / 4);
+				tadesc.EndScale = V3_ONE * 0.5f;
+				new TransformAnime(t, tadesc);
+			}
+		}
 
 		//test depth UI for shadow map
-		DepthUI* depthUI = GameObjectManager::Create<DepthUI>();
-
-
-
-		//test line collision
-		//LineCollisionTester* lct = GameObjectManager::Create<LineCollisionTester>();
-
+		if (1)
+		{
+			DepthUI* depthUI = GameObjectManager::Create<DepthUI>();
+		}
 
 		//test cube and collision
-		Cube* cb = GameObjectManager::Create<Cube>();
-		cb->GetTransform()->SetPosition(0, 3, 2);
-		cb->GetTransform()->SetRotation(PI / 3, PI / 3, 0);
-		cb->GetTransform()->SetScale(1, 1, 0.5f);
-
-		//Cube* cb2 = GameObjectManager::Create<Cube>();
-		//cb2->GetTransform()->SetPosition(0, 3, 2);
-		//cb->GetTransform()->SetRotation(PI / 3, PI / 3, 0);
-		//cb2->GetTransform()->SetScale(1, 1, 0.5f);
-		//new LookAtCamera(cb, cmr->GetCamera());
-
-		//test transform anime
-		TransformAnimeDescripition tadesc(t->GetTransform(), t->GetTransform());
-		tadesc.LoopCount = INT_MAX;
-		tadesc.EndPosition = { 0,3,0 };
-		D3DXQuaternionRotationYawPitchRoll(&tadesc.EndRotation, PI / 3, PI / 2, PI / 4);
-		tadesc.EndScale = V3_ONE * 0.5f;
-		SlowLerpAnime compute;
-		new TransformAnime(t, tadesc, compute);
+		if (0)
+		{
+			Cube* cb = GameObjectManager::Create<Cube>();
+			cb->GetTransform()->SetPosition(0, 3, 2);
+			cb->GetTransform()->SetRotation(PI / 3, PI / 3, 0);
+			cb->GetTransform()->SetScale(1, 1, 0.5f);
+		}
 
 		//test ActSelection button
-		D3DXVECTOR3 actSelectPos = { -3,2,-0.5f };
-		D3DXVECTOR3 actSelectScl = V3_ONE;
-		ActSelection* actSelect = new ActSelection(actSelectPos, actSelectScl);
+		if (0)
+		{
+			D3DXVECTOR3 actSelectPos = { -3,2,-0.5f };
+			D3DXVECTOR3 actSelectScl = V3_ONE;
+			ActSelection* actSelect = new ActSelection(actSelectPos, actSelectScl);
+		}
 
 		//test particle system
-		ParticleSystem* ps = GameObjectManager::Create<ParticleSystem>();
-		ps->GetTransform()->SetPosition(0, 0, 0);
-		ParticleSystem* ps2 = GameObjectManager::Create<ParticleSystem>();
-		ps2->GetTransform()->SetPosition(-2, 2, 0);
-		ParticleSystem* ps3 = GameObjectManager::Create<ParticleSystem>();
-		ps3->GetTransform()->SetPosition(2, 1, 0);
+		if (0)
+		{
+			ParticleSystem* ps = GameObjectManager::Create<ParticleSystem>();
+			ps->GetTransform()->SetPosition(0, 0, 0);
+			ParticleSystem* ps2 = GameObjectManager::Create<ParticleSystem>();
+			ps2->GetTransform()->SetPosition(-2, 2, 0);
+			ParticleSystem* ps3 = GameObjectManager::Create<ParticleSystem>();
+			ps3->GetTransform()->SetPosition(2, 1, 0);
+		}
 	}
 
 	//Manager::Init();
@@ -364,7 +353,7 @@ void Update()
 	//update gameobject
 	GameObjectManager::Update();
 
-#if 0
+#if 1
 	//shadow depth draw
 	Renderer::BeginDepth();
 
@@ -407,7 +396,7 @@ void Update()
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	}
 
-	//test
+	//test reset instance count
 	Polygon2DMany::Instance()->EndFrame();
 
 	//draw over

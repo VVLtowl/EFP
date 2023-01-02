@@ -2,8 +2,10 @@
 #include <list>
 
 
-class Square;
-class PieceObject;
+enum PieceType
+{
+	PIECE_NORMAL,
+};
 
 enum CampType
 {
@@ -14,15 +16,26 @@ enum CampType
 
 class Piece
 {
+	/*********************************************************
+	* @brief	コマの属性
+	********************************************************/
 public:
-	std::list<Square*> FootOnSquare;
+	class Square* FootOnSquare;
 
 	//State
 	//State State;
 
-	//Status
+	//陣営
 	int Camp;
+
+	//身分展示状態
 	bool IsOpenStatus = false;
 
-	PieceObject* TargetPieceObject;
+	//ゲームオブジェクト
+	class PieceObject* OwnPieceObject;
+
+	/*********************************************************
+	* @brief	コマの行為
+	********************************************************/
+public:
 };

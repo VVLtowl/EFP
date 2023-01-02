@@ -43,13 +43,14 @@ ActSelection::ActSelection(const D3DXVECTOR3& pos, const D3DXVECTOR3& scl):
 			{
 				m_Polygon2D->Color = { 1,0,0,1 };
 
-				TransformAnimeDescripition transDesc(m_Transform3D);
+				TransformAnimeDescripition transDesc;
 				transDesc.LoopCount = 1;
-				transDesc.DurationCount = 15;
-				transDesc.EndScale = m_OriginalScale * ACTSELECTION_HIGHLIGHT_SCALE;
+				transDesc.Duration = 15;
+				transDesc.StartPosition = m_Transform3D->GetPosition();
+				transDesc.EndScale = m_Transform3D->GetScale();
 				transDesc.EndPosition = m_OriginalPosition + ACTSELECTION_HIGHLIGHT_MOVE;
-				SlowLerpAnime slowLerp;
-				new TransformAnime(this, transDesc, slowLerp);
+				transDesc.EndScale = m_OriginalScale * ACTSELECTION_HIGHLIGHT_SCALE;
+				new TransformAnime(this, transDesc);
 
 				DebugInfo::Print("highlight button");
 			});
@@ -57,13 +58,14 @@ ActSelection::ActSelection(const D3DXVECTOR3& pos, const D3DXVECTOR3& scl):
 			{
 				m_Polygon2D->Color = { 1,1,1,1 };
 
-				TransformAnimeDescripition transDesc(m_Transform3D);
+				TransformAnimeDescripition transDesc;
 				transDesc.LoopCount = 1;
-				transDesc.DurationCount = 15;
-				transDesc.EndScale = m_OriginalScale;
+				transDesc.Duration = 15;
+				transDesc.StartPosition = m_Transform3D->GetPosition();
+				transDesc.EndScale = m_Transform3D->GetScale();
 				transDesc.EndPosition = m_OriginalPosition;
-				SlowLerpAnime slowLerp;
-				new TransformAnime(this, transDesc, slowLerp);
+				transDesc.EndScale = m_OriginalScale;
+				new TransformAnime(this, transDesc);
 				
 				DebugInfo::Print("reset button");
 			});

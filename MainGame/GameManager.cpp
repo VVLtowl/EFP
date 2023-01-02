@@ -6,52 +6,66 @@ void GameManager::Start()
 	//test
 	{
 		//create judgement
-		MainJudge = new Judgement();
-		MainJudge->Init();
+		MainJudge.Init();
 
 		//create board
-		MainBoard = new Board();
-		MainBoard->Init();
+		MainBoard.Init();
+
 
 		//create player
-		int playerCount = 0;
-		for (int i = 0; i < PLAYER_BAD_START_NUM; i++)
+		//test input player info
 		{
-			playerCount++;
-			Player* player = new Player();
+			//create bad man
+			int playerCount = 0;
+			for (int i = 0; i < PLAYER_BAD_START_NUM; i++)
+			{
+				playerCount++;
+				Player* player = new Player();
+				Pawn_Normal* normalPawn = GameObjectManager::Create<Pawn_Normal>();
+				normalPawn->GetTransform()->SetPosition(i + 1, 1000, 0);
 
-			player->Piece.Camp = CAMP_BAD;
-			player->Name = "BAD-" + std::to_string(playerCount);
-			Players.push_back(player);
-		}
-		playerCount = 0;
-		for (int i = 0; i < PLAYER_GOOD_START_NUM; i++)
-		{
-			playerCount++;
-			Player* player = new Player();
+				player->OwnPiece.Camp = CAMP_BAD;
+				player->OwnPiece.IsOpenStatus = false;
+				player->OwnPiece.OwnPieceObject = normalPawn;
+				player->Name = "BAD-" + std::to_string(playerCount);
+				Players.emplace_back(player);
+			}
+			//create good man
+			playerCount = 0;
+			for (int i = 0; i < PLAYER_GOOD_START_NUM; i++)
+			{
+				playerCount++;
+				Player* player = new Player();
+				Pawn_Normal* normalPawn = GameObjectManager::Create<Pawn_Normal>();
+				normalPawn->GetTransform()->SetPosition(-i, 1000, 0);
 
-			player->Piece.Camp = CAMP_GOOD;
-			player->Name = "GOOD-" + std::to_string(playerCount);
-			Players.push_back(player);
+				player->OwnPiece.Camp = CAMP_GOOD;
+				player->OwnPiece.IsOpenStatus = false;
+				player->OwnPiece.OwnPieceObject = normalPawn;
+				player->Name = "GOOD-" + std::to_string(playerCount);
+				Players.emplace_back(player);
+			}
 		}
+		
+		
 
 		//set up act group
 		for (auto player : Players)
 		{
-			if (player->Piece.Camp == CAMP_BAD)
+			if (player->OwnPiece.Camp == CAMP_BAD)
 			{
-				MainJudge->BadActGroup.Add(player);
+				MainJudge.BadActGroup.Add(player);
 			}
-			else if (player->Piece.Camp == CAMP_GOOD)
+			else if (player->OwnPiece.Camp == CAMP_GOOD)
 			{
-				MainJudge->GoodActGroup.Add(player);
+				MainJudge.GoodActGroup.Add(player);
 			}
 		}
 	}
 
 
 	//start
-	MainJudge->Start();
+	MainJudge.Start();
 }
 
 void GameManager::Update()
@@ -61,5 +75,9 @@ void GameManager::Update()
 
 void GameManager::End()
 {
-
+	//delete player
+	for (auto p : Players)
+	{
+		delete p;
+	}
 }

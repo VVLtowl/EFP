@@ -4,7 +4,6 @@
 TransformAnime::TransformAnime(
 	GameObject* owner, 
 	TransformAnimeDescripition desc,
-	ComputeFrameTransformDataFunc& computeDataFunc,
 	int order) :
 	Component(owner, order),
 	m_StartPosition(desc.StartPosition),
@@ -14,7 +13,8 @@ TransformAnime::TransformAnime(
 	m_EndRotation(desc.EndRotation),
 	m_EndScale(desc.EndScale),
 	m_LoopCount(desc.LoopCount),
-	m_Duration(desc.DurationCount),
+	m_Duration((float)desc.Duration),
+	m_EndEvent(desc.EndEvent),
 	m_FrameCount(0)
 {
 	m_NowPosition = m_StartPosition;
@@ -22,7 +22,7 @@ TransformAnime::TransformAnime(
 	m_NowScale = m_StartScale;
 
 	//æŒvŽZ
-	computeDataFunc(this);
+	desc.ComputeAniDataFunc(this);
 }
 
 TransformAnime::~TransformAnime()
@@ -72,9 +72,10 @@ void TransformAnime::Update()
 			float ratio = m_FrameCount / m_Duration;
 
 			//set owner transform
-			m_Owner->GetTransform()->SetPosition(m_AnimePositions[m_FrameCount]);
-			m_Owner->GetTransform()->SetRotation(m_AnimeRotations[m_FrameCount]);
-			m_Owner->GetTransform()->SetScale(m_AnimeScales[m_FrameCount]);
+			int frameID = (int)m_FrameCount;
+			m_Owner->GetTransform()->SetPosition(m_AnimePositions[frameID]);
+			m_Owner->GetTransform()->SetRotation(m_AnimeRotations[frameID]);
+			m_Owner->GetTransform()->SetScale(m_AnimeScales[frameID]);
 			m_Owner->GetTransform()->UpdateTransform();
 			m_Owner->GetTransform()->DisableUpdateThisFrame();
 
@@ -101,6 +102,7 @@ void TransformAnime::Update()
 		m_Owner->GetTransform()->UpdateTransform();
 		m_Owner->GetTransform()->DisableUpdateThisFrame();
 
+		m_EndEvent();
 		StartDestroy();
 	}
 }
@@ -112,9 +114,9 @@ void TransformAnime::Destroy()
 
 void SlowLerpAnime::operator()(TransformAnime* ani)
 {
-	for (int i = 0; i < ani->m_Duration; i++)
+	for (int frameID = 0; frameID < ani->m_Duration; frameID++)
 	{
-		float ratio = i / ani->m_Duration;
+		float ratio = frameID / ani->m_Duration;
 
 		D3DXVec3Lerp(&ani->m_NowPosition, &ani->m_NowPosition, &ani->m_EndPosition, ratio);
 		D3DXQuaternionSlerp(&ani->m_NowRotation, &ani->m_NowRotation, &ani->m_EndRotation, ratio);

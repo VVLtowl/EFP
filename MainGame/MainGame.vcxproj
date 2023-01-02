@@ -147,7 +147,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ABH_PieceInit.cpp" />
+    <ClCompile Include="BehaviourFactory.cpp" />
+    <ClCompile Include="OBH_PieceInit.cpp" />
     <ClCompile Include="ActOrderUIGroup.cpp" />
     <ClCompile Include="ActSelection.cpp" />
     <ClCompile Include="Behaviour.cpp" />
@@ -189,8 +190,10 @@
     <ClCompile Include="MyLight.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Pawn_Normal.cpp" />
+    <ClCompile Include="Piece.cpp" />
     <ClCompile Include="PieceObject.cpp" />
     <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Polygon2D.cpp" />
     <ClCompile Include="Polygon2DMany.cpp" />
     <ClCompile Include="Polygon3D.cpp" />
@@ -216,7 +219,7 @@
     <ClCompile Include="uiSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ABH_PieceInit.h" />
+    <ClInclude Include="OBH_PieceInit.h" />
     <ClInclude Include="ActOrderUIGroup.h" />
     <ClInclude Include="ActSelection.h" />
     <ClInclude Include="Behaviour.h" />

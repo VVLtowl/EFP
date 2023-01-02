@@ -22,7 +22,7 @@ void Behaviour::Update()
 	}
 	else if (m_State == UPDATE)
 	{
-		//need NextState() in update
+		//need NextState() in MainUpdate()
 		MainUpdate();
 	}
 	else if (m_State == END)

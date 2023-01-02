@@ -30,7 +30,7 @@ public:
 
 public:
 	std::list<Player*> Players;
-	Judgement* MainJudge;
-	Board* MainBoard;
+	Judgement MainJudge;
+	Board MainBoard;
 };
 

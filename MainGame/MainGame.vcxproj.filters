@@ -64,9 +64,6 @@
     <Filter Include="GameWork\GameLogic\Behaviour\ConcreteBehaviour\PlayerBehaivour">
       <UniqueIdentifier>{ed7a3520-b3fe-4e2d-a6ff-c32b21cd5f09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameWork\GameLogic\Behaviour\ConcreteBehaviour\AnimeBehaviour">
-      <UniqueIdentifier>{68175620-4f8f-4090-bf7e-e2374ab3d252}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameWork\GameLogic\Player">
       <UniqueIdentifier>{06389f4c-7469-45ed-8ed3-e7feed080c06}</UniqueIdentifier>
     </Filter>
@@ -135,6 +132,9 @@
     </Filter>
     <Filter Include="FrameWork\Component\CustormizeComponent\Animation">
       <UniqueIdentifier>{404f6a26-5c6f-46f5-988c-f1a426380f45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameWork\GameLogic\Behaviour\ConcreteBehaviour\OnceBehaviour">
+      <UniqueIdentifier>{68175620-4f8f-4090-bf7e-e2374ab3d252}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -222,8 +222,8 @@
     <ClCompile Include="JBH_GameStart.cpp">
       <Filter>GameWork\GameLogic\Behaviour\ConcreteBehaviour\JudgementBehaviour</Filter>
     </ClCompile>
-    <ClCompile Include="ABH_PieceInit.cpp">
-      <Filter>GameWork\GameLogic\Behaviour\ConcreteBehaviour\AnimeBehaviour</Filter>
+    <ClCompile Include="OBH_PieceInit.cpp">
+      <Filter>GameWork\GameLogic\Behaviour\ConcreteBehaviour\OnceBehaviour</Filter>
     </ClCompile>
     <ClCompile Include="Pawn_Normal.cpp">
       <Filter>GameWork\GameLogic\Piece\PieceObject</Filter>
@@ -338,6 +338,15 @@
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
       <Filter>GameWork\FrameWorkCustomize</Filter>
+    </ClCompile>
+    <ClCompile Include="Piece.cpp">
+      <Filter>GameWork\GameLogic\Piece</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>GameWork\GameLogic\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="BehaviourFactory.cpp">
+      <Filter>GameWork\GameLogic\Behaviour</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -464,8 +473,8 @@
     <ClInclude Include="Excuter.h">
       <Filter>GameWork\GameLogic\Behaviour</Filter>
     </ClInclude>
-    <ClInclude Include="ABH_PieceInit.h">
-      <Filter>GameWork\GameLogic\Behaviour\ConcreteBehaviour\AnimeBehaviour</Filter>
+    <ClInclude Include="OBH_PieceInit.h">
+      <Filter>GameWork\GameLogic\Behaviour\ConcreteBehaviour\OnceBehaviour</Filter>
     </ClInclude>
     <ClInclude Include="Pawn_Normal.h">
       <Filter>GameWork\GameLogic\Piece\PieceObject</Filter>
